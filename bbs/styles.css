@@ -1,0 +1,87 @@
+body {
+	background:whitesmoke;
+	margin: 0;
+	padding: 0;
+	font-family:'Meiryo', 'Hiragino Kaku Gothic ProN', sans-serif;
+}
+
+#header {
+	background: lightskyblue;
+	color: #fff;
+	margin:0;
+	padding: 0;
+}
+
+#header > h1 {
+	display: block;
+	float: left;
+	margin-left: 30px;
+}
+
+#header:after {
+	content: "";
+	clear: both;
+	display: block;
+}
+
+#bbs {
+	width: 800px;
+	margin: 30px auto;
+	background: #fff;
+	padding: 30px;
+}
+
+#posting_form {
+	margin-bottom: 30px;
+}
+
+#posting_form > h2 {
+	font-size: 18px;
+}
+input[type="submit"] {
+	margin-top: 10px;
+}
+
+#error {
+	color: red;
+}
+
+#view_posts > h2 {
+	font-size: 18px;
+}
+
+#show_from_to {
+	font-size: 14px;
+}
+
+#view_posts > ul> li > p{
+	display: inline-block;
+	font-size:12px;
+}
+
+
+#view_posts > ul {
+	font-size: 14px;
+	list-style: none;
+}
+
+.posts {
+	padding:0px;
+	margin-bottom: 0px;
+	/*border: 1px black solid;*/
+}
+
+.message {
+
+	line-height: 16px;
+	/*border: 1px black solid;*/
+}
+
+.date, .name {
+	color: #a9a9a9;
+	line-height: 12px;
+}
+
+#paging {
+	margin-top: 50px;
+}
