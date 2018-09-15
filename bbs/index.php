@@ -3,20 +3,12 @@ require_once(__DIR__.'/config.php');
 
 $bbsApp = new \MyApp\BBS();
 
-//投稿データの取得
-$posts = $bbsApp->getShowPosts();
-
-//トータル投稿数
-$totalPosts = $bbsApp->totalPosts;
-
-//必要なトータルページ数
-$totalPages = $bbsApp->totalPages;
-
-//現在表示中の記事（開始）
-$viewFrom = $bbsApp->viewFrom;
-
-//現在表示中の記事（終了）
-$viewTo = $bbsApp->viewTo;
+$posts = $bbsApp->getAllPosts();
+$totalPosts = $bbsApp->getTotalPosts();
+$totalPages = $bbsApp->getTotalPages();
+$page = $bbsApp->getViewPage();
+$viewFrom = $bbsApp->getViewFrom();
+$viewTo = $bbsApp->getViewTo();
 
 //POSTだった場合
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,6 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $error = $bbsApp->getError();
+
+// var_dump($posts);
+// exit;
 
  ?>
 
@@ -67,16 +62,25 @@ $error = $bbsApp->getError();
 	</p>
 	<ul>
 		<?php if(count($posts)):?>
-			<?php foreach ($posts as $post):?>
-
-				<?php list($no, $date,$name,$message) = explode("\t", $post);?>
+			<!-- <?php foreach ($posts as $post):?>
+				<?php list($no, $name,$message,$date) = explode("\t", $post);?>
 					<li class="posts">
 						<p class="no"><?=h(sprintf('%04d',$no));?></p>
 						<p class="message"><?=h($message);?></p>
 						<p class="name">(<?=h($name);?>)</p>
 						<p class="date">(<?=h($date);?>)</p>
 					</li>
+			<?php endforeach;?> -->
+
+			<?php foreach ($posts as $post):?>
+				<li class="posts">
+					<p class="no"><?=h(sprintf('%04d',$post['id']));?></p>
+					<p class="message"><?=h($post['body']);?></p>
+					<p class="name">(<?=h($post["username"]);?>)</p>
+					<p class="date">(<?=h($post['created']);?>)</p>
+				</li>
 			<?php endforeach;?>
+
 		<?php else:?>
 			<p>投稿はまだありません</p>
 		<?php endif;?>
@@ -87,8 +91,8 @@ $error = $bbsApp->getError();
 <!-- ページネーション############ -->
 <section><div id="paging">
 	<!-- 前へ #################### -->
-	<?php if($bbsApp->viewPage > 1):?>
-		<a href='?p=<?=h($bbsApp->viewPage - 1);?>'>&laquo;前へ</a>
+	<?php if($page > 1):?>
+		<a href='?p=<?=h($page - 1);?>'>&laquo;前へ</a>
 	<?php endif;?>
 
 	<!-- ページ数 #################### -->
@@ -99,8 +103,8 @@ $error = $bbsApp->getError();
 	<?php endif?>
 
 	<!-- 次へ -->
-	<?php if($bbsApp->viewPage < $totalPages):?>
-		<a href='?p=<?=h($bbsApp->viewPage + 1);?>'>次へ&raquo;</a>
+	<?php if($page < $totalPages):?>
+		<a href='?p=<?=h($page + 1);?>'>次へ&raquo;</a>
 	<?php else:?>
 
 	<?php endif;?>
